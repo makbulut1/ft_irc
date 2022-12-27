@@ -91,4 +91,4 @@ Stages for Client
 Socket connection: Exactly same as that of server’s socket creation
 Connect: The connect() system call connects the socket referred to by the file descriptor sockfd to the address specified by addr. Server’s address and port is specified in addr.
 
-https://www.tutorialspoint.com/unix_sockets/what_is_socket.htm
+https://www.tutorialspoint.com/unix_sockets/what_is_socket.html
