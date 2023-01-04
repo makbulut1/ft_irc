@@ -10,7 +10,9 @@ BLUE			=	\033[34m
 RED				=	\033[31m
 
 SRCS			=	$(shell find srcs -type f -name "*.cpp")
+INCS			=	$(shell find inc -type f -name "*.hpp")
 OBJS			=	$(SRCS:srcs/%.cpp=srcs/bin/%.o)
+HOBJS			=	$(INCS:inc/%.hpp)
 
 CC				=	@c++
 RM				=	@rm -rf
@@ -21,14 +23,14 @@ all:			$(NAME)
 $(BIN):
 	@mkdir $(BIN)
 
-$(NAME):	$(BIN) $(OBJS)
+$(NAME):	$(BIN) $(OBJS) $(HOBJS)
 			@echo "$(YELLOW)>- Compiling... [$(NAME)] $(RESET)"
-			@$(CC) $(CPPFLAGS) $(OBJS) -o $(NAME)
+			@$(CC) $(CPPFLAGS) $(OBJS) $(HOBJS) -o $(NAME)
 			@echo "$(GREEN)>- Finished! $(RESET)"
 
 clean:
 			@echo "$(RED)>- Deleting... [$(NAME)] $(RESET)"
-			@$(RM) $(OBJS)
+			@$(RM) $(OBJS) $(HOBJS)
 			@$(RM) $(BIN)
 			@echo "$(BLUE)>- Successfully! $(RESET)"
 
