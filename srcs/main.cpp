@@ -19,20 +19,13 @@ int main( int ac, char* av[] )
     {
 		try
 		{
-			int servSock, cliSock, i;
 			struct sockaddr_in serv_addr, cli_addr;
 			socklen_t addr_len;
+			int servSock, cliSock, i;
 			char data[1024];
 			const char* msg = "--/ WELCOME TO THE [FT_IRC] SERVER \\--\n";
 
 			Server serv(atoi(av[1]), av[2]);
-
-			servSock = socket( AF_INET, SOCK_STREAM, 0 );
-			if ( servSock < 0 )
-			{
-				cerr << "[-]Socket Error!" << endl;
-				exit(1);
-			}
 			memset(&serv_addr, '\0', sizeof(serv_addr));
 			serv_addr.sin_family = AF_INET;
 			serv_addr.sin_addr.s_addr = htons(INADDR_ANY);
