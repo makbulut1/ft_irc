@@ -16,9 +16,21 @@ Server::~Server() {};
 
 int Server::starting( void )
 {
-	struct sockaddr_in servSock;
-	int servSock_fd;
-
 	memset(&servSock, 0, sizeof(servSock));
-	servSock_fd =
+	servSock_fd = sockAttr( &servSock, PORT );
+	if( servSock_fd == -1 )
+		return -1;
+	if( fcntl( servSock_fd, F_SETFL, O_NONBLOCK ) == -1 )
+	{
+		cerr << "[-]Socket could not be set to nonblock" << endl;
+		close(servSock_fd);
+		return -1;
+	}
+	if( listen(servSock_fd, 5) == -1 )
+	{
+		cerr << "[-]Socket is not listening" << endl;
+		close(servSock_fd);
+		return -1;
+	}
+	cout << "[.]Server Listening..." << endl;
 };

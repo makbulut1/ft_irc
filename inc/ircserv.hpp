@@ -17,6 +17,7 @@
 #include <iostream>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -25,5 +26,7 @@ using std::cout;
 using std::cerr;
 using std::endl;
 using std::string;
+
+int sockAttr( struct sockaddr_in *servSock, int port );
 
 #endif

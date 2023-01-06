@@ -2,6 +2,9 @@
 #define SERVER_HPP
 
 #include <iostream>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 using std::string;
 
@@ -20,6 +23,8 @@ public:
 
 private:
 	int PORT;
+	int servSock_fd;
+	struct sockaddr_in servSock;
 	string PASS;
 };
 
