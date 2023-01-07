@@ -1,10 +1,15 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
+#include "../inc/Client.hpp"
 #include <iostream>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <vector>
+#include <poll.h>
+
+class Client;
 
 using std::string;
 
@@ -19,7 +24,11 @@ public:
 		const char* what() const throw();
 	};
 
-	int starting( void );
+	int getPORT( void );
+	string& getPASS( void );
+
+	int sockStart( void );
+	int sockScan( void );
 
 private:
 	int PORT;

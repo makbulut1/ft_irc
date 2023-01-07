@@ -14,7 +14,11 @@ const char* Server::WrongPortNumber::what() const throw()
 
 Server::~Server() {};
 
-int Server::starting( void )
+string &Server::getPASS( void ) { return PASS; }
+
+int Server::getPORT( void ) { return PORT; }
+
+int Server::sockStart( void )
 {
 	memset(&servSock, 0, sizeof(servSock));
 	servSock_fd = sockAttr( &servSock, PORT );
@@ -28,9 +32,66 @@ int Server::starting( void )
 	}
 	if( listen(servSock_fd, 5) == -1 )
 	{
-		cerr << "[-]Socket is not listening" << endl;
+		cerr << "[-]Socket is not listening!" << endl;
 		close(servSock_fd);
 		return -1;
 	}
 	cout << "[.]Server Listening..." << endl;
 };
+
+int Server::sockScan( void )
+{
+	struct pollfd pl;
+	std::vector<struct pollfd> plFd;
+	std::vector<Client> usr;
+	int val, i = 0;
+	size_t x;
+
+	pl.fd = servSock_fd;
+	pl.events = POLLIN;
+	plFd.push_back(pl);
+	while (true)
+	{
+		val = poll(&plFd[0], plFd.size(), -1);
+		if( val == 0 )
+		{
+			cerr << "[-]Time has expired!" << endl;
+			break;
+		}
+		if( val == -1 )
+		{
+			cerr << "[-]Error from poll!" << endl;
+			break;
+		}
+		while ( i < plFd.size() )
+		{
+			if (plFd[i].revents == 0)
+			{
+				i++;
+				continue;
+			}
+			if (plFd[i].revents != POLLIN )
+			{
+				clientDisconnecter( plFd, usr, servSock, i );
+				continue;
+			}
+			if( plFd[i].fd == servSock_fd )
+			{
+				if ( clientAdder(plFd, usr, servSock, servSock_fd) == -1)
+					return -1;
+			}
+			else
+			{
+				if ( clientAuth( plFd, usr, i ) == -1 )
+				{
+					// ?
+					// ?
+					clientDisconnecter( plFd, usr, servSock, i );
+					i--;
+				}
+			}
+			i++;
+		}
+	}
+	return 0;
+}
