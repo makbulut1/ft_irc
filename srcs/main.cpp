@@ -13,6 +13,7 @@
 #include "ircserv.hpp"
 #include "../inc/Server.hpp"
 
+string g_PASS;
 int main( int ac, char* av[] )
 {
     if (ac == 3)
@@ -20,6 +21,8 @@ int main( int ac, char* av[] )
 		try
 		{
 			int port = atoi(av[1]);
+			string passw(av[2]);
+			g_PASS = passw;
 			Server serv(port, av[2]);
 
 			if ( serv.sockStart() == -1 )

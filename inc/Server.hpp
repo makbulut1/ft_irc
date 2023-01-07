@@ -29,7 +29,7 @@ public:
 	};
 
 	int getPORT( void );
-	string& getPASS( void );
+	string getPASS( void );
 
 	int sockStart( void );
 	int sockScan( void );

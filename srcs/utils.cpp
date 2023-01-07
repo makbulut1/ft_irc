@@ -73,21 +73,19 @@ int clientAdder( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, soc
 
 static int readClient_data( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, int cli )
 {
-	char bfr[257];
+	char bfr[1024];
 	int stt;
 
 	while (true)
 	{
-		memset( bfr, 0, 257 );
-		stt = recv( plFd[cli].fd, bfr, 257, 0 );
+		memset( bfr, 0, sizeof(bfr) );
+		stt = recv( plFd[cli].fd, bfr, sizeof(bfr), 0 );
 		if( stt < 0 )
 			break;
 		if( stt == 0 )
 			return -1;
 		bfr[stt] = 0;
-		cout << bfr << endl; //!!!!
 		usr[cli - 1].setData(usr[cli - 1].getData() + bfr);
-		cout << usr[cli - 1].getData() << endl; //!!!
 	}
 	return 0;
 };
@@ -104,12 +102,11 @@ static void chrTrimer( string& s, char ch )
 
 static int passChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, string data, int cli )
 {
-	Server servPass;
 	string outPass(data);
-	string errMsg("[-]Wrong Password!\n");
+	string errMsg("[-]Wrong Password, Try Again Please:\n");
 	string noticeMsg("[.]Enter <NICK> your_nick Than <USER> your_username\n");
 
-	if( outPass != servPass.getPASS() )
+	if( outPass != g_PASS )
 	{
 		send( plFd[cli].fd, errMsg.data(), errMsg.size(), 0 );
 		return 0;
@@ -129,7 +126,6 @@ int clientAuth( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, int 
 {
 	string data;
 
-	cout << "WHAT!!??" << endl;
 	while (true)
 	{
 		if( readClient_data( plFd, usr, cli ) == -1 )
@@ -141,12 +137,12 @@ int clientAuth( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, int 
 			while (usr[cli - 1].getData().find('\r') != string::npos )
 				chrDeleter( '\r', usr[cli - 1].getData() );
 		}
-		data = usr[cli - 1].getData().substr(0, usr[cli - 1].getData().find('\n'));
+		data = usr[cli - 1].getData().substr( 0, usr[cli - 1].getData().find('\n') );
 		chrTrimer( usr[ cli - 1 ].getData(), '\n' );
 		cout << MAGEN << ">> " << "[" << plFd[cli].fd << "]" << " << Client: " << CYN << data << RESET << endl;
 		if( usr[cli - 1].getPasswdStat() == 0 )
 		{
-			if ( passChecker( plFd, usr, data, cli ) )
+			if ( passChecker( plFd, usr, data, cli ) == -1 )
 				return -1;
 			else
 				continue;

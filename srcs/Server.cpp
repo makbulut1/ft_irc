@@ -15,8 +15,7 @@ const char* Server::WrongPortNumber::what() const throw()
 
 Server::~Server() {};
 
-string &Server::getPASS( void ) { return PASS; }
-
+string Server::getPASS( void ) { return PASS; }
 int Server::getPORT( void ) { return PORT; }
 
 int Server::sockStart( void )
@@ -40,7 +39,6 @@ int Server::sockStart( void )
 	cout << "[.]Server Listening..." << endl;
 	return sockScan();
 };
-
 int Server::sockScan( void )
 {
 	struct pollfd pl;

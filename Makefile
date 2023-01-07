@@ -25,7 +25,7 @@ $(BIN):
 
 $(NAME):	$(BIN) $(OBJS) $(HOBJS)
 			@echo "$(YELLOW)>- Compiling... [$(NAME)] $(RESET)"
-			@$(CC) $(CPPFLAGS) $(OBJS) $(HOBJS) -o $(NAME)
+			@$(CC) $(CPPFLAGS) $(OBJS) -o $(NAME)
 			@echo "$(GREEN)>- Finished! $(RESET)"
 
 clean:

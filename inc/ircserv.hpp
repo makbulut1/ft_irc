@@ -46,6 +46,7 @@ using std::cerr;
 using std::endl;
 using std::string;
 
+extern string g_PASS;
 int sockAttr( struct sockaddr_in *servSock, short int port);
 void clientDisconnecter( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, sockaddr_in *servSock, int cli );
 int clientAdder( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, sockaddr_in *servSock, int servSock_fd );
