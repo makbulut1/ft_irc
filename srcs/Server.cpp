@@ -1,7 +1,8 @@
 #include "../inc/Server.hpp"
-#include "../inc/ircserv.hpp"
 
-Server::Server( int &port, string &pass ) : PORT(port), PASS(pass)
+Server::Server(){};
+
+Server::Server( int port, string pass ) : PORT(port), PASS(pass)
 {
 	if( PORT > 65535 || PORT < 1024 )
 		throw WrongPortNumber();
@@ -37,6 +38,8 @@ int Server::sockStart( void )
 		return -1;
 	}
 	cout << "[.]Server Listening..." << endl;
+
+	return 0;
 };
 
 int Server::sockScan( void )
@@ -44,8 +47,8 @@ int Server::sockScan( void )
 	struct pollfd pl;
 	std::vector<struct pollfd> plFd;
 	std::vector<Client> usr;
-	int val, i = 0;
-	size_t x;
+	int val;
+	size_t i = 0;
 
 	pl.fd = servSock_fd;
 	pl.events = POLLIN;
@@ -72,12 +75,12 @@ int Server::sockScan( void )
 			}
 			if (plFd[i].revents != POLLIN )
 			{
-				clientDisconnecter( plFd, usr, servSock, i );
+				clientDisconnecter( plFd, usr, &servSock, i );
 				continue;
 			}
 			if( plFd[i].fd == servSock_fd )
 			{
-				if ( clientAdder(plFd, usr, servSock, servSock_fd) == -1)
+				if ( clientAdder(plFd, usr, &servSock, servSock_fd) == -1)
 					return -1;
 			}
 			else
@@ -86,7 +89,7 @@ int Server::sockScan( void )
 				{
 					// ?
 					// ?
-					clientDisconnecter( plFd, usr, servSock, i );
+					clientDisconnecter( plFd, usr, &servSock, i );
 					i--;
 				}
 			}

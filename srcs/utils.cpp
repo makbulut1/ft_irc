@@ -42,12 +42,12 @@ int clientAdder( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, soc
 {
 	struct pollfd pl;
 	int clientSock_fd;
-	Client newClient = new Client();
+	Client newClient;
 	socklen_t sockLen = sizeof(sockaddr);
 
 	while (true)
 	{
-		clientSock_fd = accept( servSock_fd, (sockaddr*)servSock_fd, &sockLen );
+		clientSock_fd = accept( servSock_fd, (sockaddr*)servSock, &sockLen );
 		if( clientSock_fd < 0 )
 		{
 			if( errno != EWOULDBLOCK )
@@ -63,7 +63,7 @@ int clientAdder( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, soc
 		pl.revents = 0;
 		plFd.push_back( pl );
 		usr.push_back( newClient );
-		string msg = " [.]Please Enter The Server Password:" << endl;
+		string msg = " [.]Please Enter The Server Password:\n";
 		send( clientSock_fd, msg.data(), msg.size(), 0 );
 		cout << GRN << "[+]Connection accepted from-> " << inet_ntoa( servSock->sin_addr ) << ":" << ntohs(servSock->sin_port) << RESET << endl;
 	}
@@ -117,11 +117,11 @@ static int passChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &u
 	return 0;
 }
 
-static int cmdChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, string data, int cli )
+/*static int cmdChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, string data, int cli )
 {
 
 	// look_cmd kismidir eren hocam, senin yazacagin kisim yani. :)
-}
+}*/
 
 int clientAuth( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, int cli )
 {

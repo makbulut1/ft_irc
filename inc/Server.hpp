@@ -1,6 +1,7 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
+#include "../inc/ircserv.hpp"
 #include "../inc/Client.hpp"
 #include <iostream>
 #include <sys/socket.h>
@@ -12,11 +13,13 @@
 class Client;
 
 using std::string;
+using std::exception;
 
 class Server
 {
 public:
-	Server( int& port, string&pass );
+	Server();
+	Server( int port, string pass );
 	~Server();
 
 	struct WrongPortNumber : public exception

@@ -19,7 +19,9 @@ int main( int ac, char* av[] )
     {
 		try
 		{
-			Server serv(atoi(av[1]), av[2]);
+			int port = atoi(av[1]);
+			Server serv(port, av[2]);
+
 			if ( serv.sockStart() == -1 )
 				return 1;
 			if ( serv.sockScan() == -1 )
