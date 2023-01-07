@@ -24,8 +24,8 @@ int main( int ac, char* av[] )
 
 			if ( serv.sockStart() == -1 )
 				return 1;
-			if ( serv.sockScan() == -1 )
-				return 1;
+/*			if ( serv.sockScan() == -1 )
+				return 1;*/
 		}
 		catch ( const std::exception &e )
 		{

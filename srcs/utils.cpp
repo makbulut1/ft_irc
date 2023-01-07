@@ -20,7 +20,7 @@ int sockAttr( struct sockaddr_in *servSock, short int port)
 		close(fdSock);
 		return -1;
 	}
-	if ( bind( fdSock, (struct sockaddr*)servSock, sizeof(struct sockaddr_in) )  == -1)
+	if ( bind( fdSock, (struct sockaddr*)servSock, sizeof(struct sockaddr_in) ) == -1)
 	{
 		cerr << "[-]Socket is not binding: " << endl;
 		perror("Reason is");
@@ -64,8 +64,8 @@ int clientAdder( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, soc
 		pl.revents = 0;
 		plFd.push_back( pl );
 		usr.push_back( newClient );
-		string msg = " [.]Please Enter The Server Password:\n";
-		send( clientSock_fd, msg.data(), msg.size(), 0 );
+		string msg = "[*]Please Enter The Server Password:\n";
+		send( clientSock_fd, msg.data(), msg.length(), 0 ); // or msg.size()
 		cout << GRN << "[+]Connection accepted from-> " << inet_ntoa( servSock->sin_addr ) << ":" << ntohs(servSock->sin_port) << RESET << endl;
 	}
 	return 0;
@@ -73,19 +73,21 @@ int clientAdder( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, soc
 
 static int readClient_data( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, int cli )
 {
-	char bfr[1024];
+	char bfr[257];
 	int stt;
 
 	while (true)
 	{
-		memset( bfr, 0, sizeof(bfr) );
-		stt = recv( plFd[cli].fd, bfr, sizeof(bfr), 0 );
+		memset( bfr, 0, 257 );
+		stt = recv( plFd[cli].fd, bfr, 257, 0 );
 		if( stt < 0 )
 			break;
 		if( stt == 0 )
 			return -1;
 		bfr[stt] = 0;
+		cout << bfr << endl; //!!!!
 		usr[cli - 1].setData(usr[cli - 1].getData() + bfr);
+		cout << usr[cli - 1].getData() << endl; //!!!
 	}
 	return 0;
 };
@@ -127,6 +129,7 @@ int clientAuth( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, int 
 {
 	string data;
 
+	cout << "WHAT!!??" << endl;
 	while (true)
 	{
 		if( readClient_data( plFd, usr, cli ) == -1 )

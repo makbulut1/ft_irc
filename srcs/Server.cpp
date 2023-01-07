@@ -38,8 +38,7 @@ int Server::sockStart( void )
 		return -1;
 	}
 	cout << "[.]Server Listening..." << endl;
-
-	return 0;
+	return sockScan();
 };
 
 int Server::sockScan( void )
@@ -48,7 +47,7 @@ int Server::sockScan( void )
 	std::vector<struct pollfd> plFd;
 	std::vector<Client> usr;
 	int val;
-	size_t i = 0;
+	unsigned int i;
 
 	pl.fd = servSock_fd;
 	pl.events = POLLIN;
@@ -66,6 +65,7 @@ int Server::sockScan( void )
 			cerr << "[-]Error from poll!" << endl;
 			break;
 		}
+		i = 0;
 		while ( i < plFd.size() )
 		{
 			if (plFd[i].revents == 0)
