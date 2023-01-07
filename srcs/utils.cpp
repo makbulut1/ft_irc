@@ -117,10 +117,11 @@ static int passChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &u
 	return 0;
 }
 
-/*static int cmdChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, string data, int cli )
+// look_cmd kismidir eren hocam, senin yazacagin kisim yani. :)
+static int cmdChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, string data, int cli )
 {
-	// look_cmd kismidir eren hocam, senin yazacagin kisim yani. :)
-}*/
+
+}
 
 int clientAuth( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, int cli )
 {
