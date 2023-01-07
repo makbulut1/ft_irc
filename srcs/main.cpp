@@ -19,39 +19,13 @@ int main( int ac, char* av[] )
     {
 		try
 		{
-			struct sockaddr_in serv_addr, cli_addr;
-			socklen_t addr_len;
-			int servSock, cliSock, i;
-			char data[1024];
-			const char* msg = "--/ WELCOME TO THE [FT_IRC] SERVER \\--\n";
+			int port = atoi(av[1]);
+			Server serv(port, av[2]);
 
-			Server serv(atoi(av[1]), av[2]);
-			memset(&serv_addr, '\0', sizeof(serv_addr));
-			serv_addr.sin_family = AF_INET;
-			serv_addr.sin_addr.s_addr = htons(INADDR_ANY);
-			serv_addr.sin_port = htons(PORT);
-
-			i = bind(servSock, (sockaddr*)&serv_addr, sizeof(serv_addr) );
-			if (i < 0)
-			{
-				cerr << "[-]Connection cannot binding!" << endl;
-				exit(1);
-			}
-			cout << "[+]Bind to the port number: " << PORT << endl;
-
-			listen(servSock, 5);
-			cout << "[.]Server Listening..." << endl;
-			while (true)
-			{
-				addr_len = sizeof(cli_addr);
-				cliSock = accept(servSock, (sockaddr*)&cli_addr, &addr_len);
-				cout << "[+]Client Connected." << endl;
-				send(cliSock, msg, strlen(msg), 0);
-				int t = recv(cliSock, data, sizeof(data), 0);
-				cout << "<<" << endl;
-				data[t] = 0;
-				cout << data << endl;
-			}
+			if ( serv.sockStart() == -1 )
+				return 1;
+			if ( serv.sockScan() == -1 )
+				return 1;
 		}
 		catch ( const std::exception &e )
 		{
