@@ -22,6 +22,7 @@ public:
 	Server( int port, string pass );
 	~Server();
 
+	struct sockaddr_in servSock;
 	struct WrongPortNumber : public exception
 	{
 		const char* what() const throw();
@@ -35,9 +36,8 @@ public:
 
 private:
 	int PORT;
-	int servSock_fd;
-	struct sockaddr_in servSock;
 	string PASS;
+	int servSock_fd;
 };
 
 #endif

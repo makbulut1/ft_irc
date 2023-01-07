@@ -36,6 +36,7 @@
 #include <arpa/inet.h>
 #include <vector>
 #include <poll.h>
+#include <errno.h>
 
 class Client;
 class Server;
@@ -45,7 +46,7 @@ using std::cerr;
 using std::endl;
 using std::string;
 
-int sockAttr( struct sockaddr_in *servSock, int port );
+int sockAttr( struct sockaddr_in *servSock, short int port);
 void clientDisconnecter( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, sockaddr_in *servSock, int cli );
 int clientAdder( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, sockaddr_in *servSock, int servSock_fd );
 int clientAuth( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, int cli );

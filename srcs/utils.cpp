@@ -1,12 +1,12 @@
 #include "../inc/ircserv.hpp"
 
-int sockAttr( struct sockaddr_in *servSock, int port )
+int sockAttr( struct sockaddr_in *servSock, short int port)
 {
 	int fdSock, x = 1;
 
 	servSock->sin_family = AF_INET;
 	servSock->sin_port = htons(port);
-	servSock->sin_addr.s_addr = htons(INADDR_ANY);
+	servSock->sin_addr.s_addr = htonl(INADDR_ANY);
 	memset(&(servSock->sin_zero), 0, 8);
 	fdSock = socket(AF_INET, SOCK_STREAM, 0);
 	if( fdSock == -1 )
@@ -20,9 +20,10 @@ int sockAttr( struct sockaddr_in *servSock, int port )
 		close(fdSock);
 		return -1;
 	}
-	if ( bind( fdSock, (sockaddr*)servSock, sizeof(sockaddr_in) == -1 ) )
+	if ( bind( fdSock, (struct sockaddr*)servSock, sizeof(struct sockaddr_in) == -1 ) )
 	{
-		cerr << "[-]Socket not binding!" << endl;
+		cerr << "[-]Socket is not binding: " << endl;
+		perror("Reason is");
 		close(fdSock);
 		return -1;
 	}
@@ -94,7 +95,7 @@ static void chrDeleter( char ch, string& s )
 	s.erase( std::remove( s.begin(), s.end(), ch ), s.end() );
 }
 
-static void chrTrimer( char ch, string& s )
+static void chrTrimer( string& s, char ch )
 {
 	s = s.substr( s.find(ch) + 1, s.length() - s.find(ch) );
 }
@@ -119,7 +120,6 @@ static int passChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &u
 
 /*static int cmdChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, string data, int cli )
 {
-
 	// look_cmd kismidir eren hocam, senin yazacagin kisim yani. :)
 }*/
 
@@ -150,8 +150,8 @@ int clientAuth( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, int 
 		}
 		// ?
 		// ?
-		if( cmdChecker( plFd, usr, data, cli ) == -1 )
-			return -1;
+		/*if( cmdChecker( plFd, usr, data, cli ) == -1 )
+			return -1;*/
 		break;
 	}
 	return 0;
