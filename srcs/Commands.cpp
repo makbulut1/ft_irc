@@ -39,8 +39,8 @@ int Commands::EnterCommand(std::string &data, int id, std::vector<Client> &usr, 
             "PRIVMSG",
 //            "JOIN",
 //            "PING",
-//            "NICK",
-//            "USER",
+            "NICK",
+            "USER",
 //            "KICK",
             NULL
     };
@@ -50,8 +50,8 @@ int Commands::EnterCommand(std::string &data, int id, std::vector<Client> &usr, 
             &privmsg,
 //            &join,
 //            &ping,
-//            &nickname,
-//            &nickname,
+            &nickname,
+            &nickname,
 //            &kick
     };
 
