@@ -26,6 +26,7 @@
 
 #include "../inc/Client.hpp"
 #include "../inc/Server.hpp"
+#include "../inc/Commands.hpp"
 #include <stdlib.h>
 #include <iostream>
 #include <string.h>
