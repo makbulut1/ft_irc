@@ -41,4 +41,7 @@ void	SendMessage(std::string message, int fd);
 void    chrTrimer(std::string &s, char ch);
 int privmsg(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, std::string data);
 int nickname(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, std::string data);
+int ping(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr,std::string data);
+int join(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, std::string data);
+
 #endif //FT_IRC_COMMANDS_HPP
