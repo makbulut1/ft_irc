@@ -36,7 +36,7 @@ int Commands::EnterCommand(std::string &data, int id, std::vector<Client> &usr, 
     int i = 0;
 
     const char *cmd[] = {
-//            "PRIVMSG",
+            "PRIVMSG",
 //            "JOIN",
 //            "PING",
 //            "NICK",
@@ -47,7 +47,7 @@ int Commands::EnterCommand(std::string &data, int id, std::vector<Client> &usr, 
 
     int (*cmdp[])(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, std::string data) =
     {
-//            &privmsg,
+            &privmsg,
 //            &join,
 //            &ping,
 //            &nickname,
