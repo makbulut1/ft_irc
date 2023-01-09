@@ -1,12 +1,9 @@
-//
-// Created by Mehmet eren Akbulut on 1/7/23.
-//
-
 #include "../inc/Commands.hpp"
 #include "../inc/ircserv.hpp"
-Commands::Commands() {}
 
-Commands::~Commands() {}
+Commands::Commands() {};
+
+Commands::~Commands() {};
 
 const std::string &Commands::getCommand() {
     return this->Command;

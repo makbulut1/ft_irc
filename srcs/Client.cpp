@@ -1,7 +1,7 @@
 #include "../inc/Client.hpp"
 
-Client::Client() : fullName(""), nick(""), data(""), channel(""), reply(""), nameStat(0), passwdStat(0), nickStat(0), isOpr(
-        false) {};
+Client::Client() : fullName(""), nick(""), data(""), channel(""), reply(""),
+					nameStat(0), passwdStat(0), nickStat(0), isOpr(false) {};
 
 Client::~Client(){};
 

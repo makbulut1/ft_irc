@@ -1,7 +1,3 @@
-//
-// Created by Mehmet eren Akbulut on 1/7/23.
-//
-
 #ifndef FT_IRC_COMMANDS_HPP
 #define FT_IRC_COMMANDS_HPP
 

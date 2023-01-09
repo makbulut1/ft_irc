@@ -27,16 +27,20 @@ int main( int ac, char* av[] )
 
 			if ( serv.sockStart() == -1 )
 				return 1;
-/*			if ( serv.sockScan() == -1 )
-				return 1;*/
+			if ( serv.sockScan() == -1 )
+				return 1;
 		}
 		catch ( const std::exception &e )
 		{
-			cerr << e.what() << endl;
+			cerr << RED << e.what() << endl << YLW <<
+				"Port must be between [1024 - 65535]" << RESET << endl;
 			exit(1);
 		}
 	}
     else
-		cerr << "Missing or More Arguments!" << endl;   
+	{
+		cerr << RED << "Missing or More Arguments!" << endl << YLW <<
+			"Please Type This Format:"<< endl << CYN <<"./ircserv <port> <servPass>" << RESET << endl;
+	}
 	 return 0;
 }

@@ -11,24 +11,24 @@ int sockAttr( struct sockaddr_in *servSock, short int port)
     fdSock = socket(AF_INET, SOCK_STREAM, 0);
     if( fdSock == -1 )
     {
-        cerr << "[-]Socket is not created!" << endl;
+        cerr << RED <<"[-]Socket is not created!" << RESET << endl;
         return -1;
     }
     if( setsockopt( fdSock, SOL_SOCKET, SO_REUSEADDR, &x, sizeof(x) ) == -1 )
     {
-        cerr << "[-]Socket could be not set options!" << endl;
+        cerr << RED << "[-]Socket could be not set options!" << RESET << endl;
         close(fdSock);
         return -1;
     }
     if ( bind( fdSock, (struct sockaddr*)servSock, sizeof(struct sockaddr_in) ) == -1)
     {
-        cerr << "[-]Socket is not binding: " << endl;
-        perror("Reason is");
+        cerr << RED << "[-]Socket is not binding! " << RESET << endl;
+        perror("\e[1;33mReason is");
         close(fdSock);
         return -1;
     }
 
-    cout << "[+]Bind to the port number: " << port << endl;
+    cout << BLUE << "[+]Bind to the port number: " << MAGEN << port << RESET << endl;
     return (fdSock);
 }
 
@@ -37,7 +37,8 @@ void clientDisconnecter( std::vector<struct pollfd> &plFd, std::vector<Client> &
     close(plFd[cli].fd);
     plFd.erase( plFd.begin() + cli);
     usr.erase( usr.begin() + cli - 1 );
-    cout << RED << "[-]Connection Refused-> " << inet_ntoa( servSock->sin_addr ) << ":" << ntohs(  servSock->sin_port) << RESET << endl;
+    cout << RED << "[-]Connection Refused" << WHT << " -> " << CYN << inet_ntoa( servSock->sin_addr ) <<
+			WHT << ":" << YLW << ntohs( servSock->sin_port ) << RESET << endl;
 }
 
 int clientAdder( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, sockaddr_in *servSock, int servSock_fd )
@@ -54,7 +55,7 @@ int clientAdder( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, soc
         {
             if( errno != EWOULDBLOCK )
             {
-                cerr << "[-]Client cannot accepted!" << endl;
+                cerr << RED << "[-]Client cannot accepted!" << RESET << endl;
                 return -1;
             }
             break;
@@ -63,20 +64,12 @@ int clientAdder( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, soc
         pl.fd = clientSock_fd;
         pl.events = POLLIN;
         pl.revents = 0;
-        newClient.setChannel("");
-        newClient.setName("");
-        newClient.setData("");
-        newClient.setNick("");
-        newClient.setReply("");
-        newClient.setPasswdStat(0);
-        newClient.setNameStat(0);
-        newClient.setNickStat(0);
-        newClient.setIsOpr(0);
         plFd.push_back( pl );
         usr.push_back( newClient );
-        string msg = "[*]Please Enter The Server Password:\n";
-        send( clientSock_fd, msg.data(), msg.length(), 0 ); // or msg.size()
-        cout << GRN << "[+]Connection accepted from-> " << inet_ntoa( servSock->sin_addr ) << ":" << ntohs(servSock->sin_port) << RESET << endl;
+        string msg = "\e[1;33m[*]Please enter the server password:\e[0m ";
+        send( clientSock_fd, msg.data(), msg.length(), 0 );
+        cout << GRN << "[+]Connection Accepted" << WHT << " -> " << CYN <<
+			inet_ntoa( servSock->sin_addr ) << WHT << ":" << YLW << ntohs(servSock->sin_port) << RESET << endl;
     }
     return 0;
 }
@@ -105,17 +98,12 @@ static void chrDeleter( char ch, string& s )
     s.erase( std::remove( s.begin(), s.end(), ch ), s.end() );
 }
 
-//static void chrTrimer( string& s, char ch )
-//{
-//    s = s.substr( s.find(ch) + 1, s.length() - s.find(ch) );
-//}
-
 static int passChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, string data, int cli )
 {
     string outPass(data);
-    string errMsg("[-]Wrong Password, Try Again Please:\n");
-    string noticeMsg("[.]Enter <NICK> your_nick Than <USER> your_username\n");
-
+    string errMsg("\e[1;31m[-]Wrong password!\n\e[1;34m[*]Retype password:\e[0m ");
+    string noticeMsg("\e[1;34m[.]Enter <NICK> your_nick than <USER> your_username "
+					 "e.g:\e[1;35m\nNICK bob123\nUSER bob\n\e[1;33m(Please login below as shown above..)\n\e[0m");
     if( outPass != g_PASS )
     {
         send( plFd[cli].fd, errMsg.data(), errMsg.size(), 0 );
@@ -123,11 +111,9 @@ static int passChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &u
     }
     usr[cli - 1].setPasswdStat(1);
     send( plFd[cli].fd, noticeMsg.data(), noticeMsg.size(), 0 );
-    cerr << outPass << endl;
     return 0;
 }
 
-// look_cmd kismidir eren hocam, senin yazacagin kisim yani. :)
 static int cmdChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, string data, int cli )
 {
     Commands    cmd;
@@ -163,8 +149,6 @@ int clientAuth( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, int 
             else
                 continue;
         }
-        // ?
-        // ?
         if( cmdChecker( plFd, usr, data, cli ) == -1 )
             return -1;
         break;

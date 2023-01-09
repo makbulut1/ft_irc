@@ -16,6 +16,7 @@ const char* Server::WrongPortNumber::what() const throw()
 Server::~Server() {};
 
 string Server::getPASS( void ) { return PASS; }
+
 int Server::getPORT( void ) { return PORT; }
 
 int Server::sockStart( void )
@@ -26,19 +27,20 @@ int Server::sockStart( void )
 		return -1;
 	if( fcntl( servSock_fd, F_SETFL, O_NONBLOCK ) == -1 )
 	{
-		cerr << "[-]Socket could not be set to nonblock" << endl;
+		cerr << RED << "[-]Socket could not be set to nonblock" << RESET << endl;
 		close(servSock_fd);
 		return -1;
 	}
 	if( listen(servSock_fd, 5) == -1 )
 	{
-		cerr << "[-]Socket is not listening!" << endl;
+		cerr << RED <<"[-]Socket is not listening!" << RESET << endl;
 		close(servSock_fd);
 		return -1;
 	}
-	cout << "[.]Server Listening..." << endl;
-	return sockScan();
-};
+	cout << YLW << "[.]Server Listening..." << RESET << endl;
+	return 0;
+}
+
 int Server::sockScan( void )
 {
 	struct pollfd pl;
@@ -55,12 +57,12 @@ int Server::sockScan( void )
 		val = poll(&plFd[0], plFd.size(), -1);
 		if( val == 0 )
 		{
-			cerr << "[-]Time has expired!" << endl;
+			cerr << RED << "[-]Time has expired!" << RESET << endl;
 			break;
 		}
 		if( val == -1 )
 		{
-			cerr << "[-]Error from poll!" << endl;
+			cerr << RED << "[-]Error from poll!" << RESET << endl;
 			break;
 		}
 		i = 0;
@@ -85,8 +87,6 @@ int Server::sockScan( void )
 			{
 				if ( clientAuth( plFd, usr, i ) == -1 )
 				{
-					// ?
-					// ?
 					clientDisconnecter( plFd, usr, &servSock, i );
 					i--;
 				}
