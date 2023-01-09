@@ -54,19 +54,19 @@ int Commands::EnterCommand(std::string &data, int id, std::vector<Client> &usr, 
 
     setSubCmd(data);
     if (data.find(' ') == std::string::npos) {
-        setMessage("411 ERR_NORECIPIENT\n:No recipient given (" + getSubCmd() + ")\n");
+        setMessage("\e[1;31mInvalid Command!\n\e[1;36mCommand not found: " + getSubCmd() + "\n\e[0m");
         send(plFd[id].fd , this->getMessage().data(), this->getMessage().length(), 0);
         return 0;
     }
     setCommand(data.substr(0, data.find(' ')));
     chrTrimer(data, ' ');
-    std::cout << "command: " << getCommand() << std::endl;
+    std::cout << YLW << "Outcoming Command: " << getCommand() << RESET << std::endl;
     while (cmd[i]) {
         if (getCommand() == cmd[i])
             return cmdp[i](id, plFd, usr, data);
         ++i;
     }
-    setMessage("411 ERR_NORECIPIENT\n:No recipient given (" + getSubCmd() + ")\n");
+    setMessage("\e[1;31mMissing Command!\n\e[1;36mCommand is missing: " + getSubCmd() + "\n\e[0m");
     SendMessage(getMessage(), plFd[id].fd);
     return 0;
 }
@@ -77,6 +77,7 @@ void chrTrimer(std::string &s, char ch) {
 
 void	SendMessage(std::string message, int fd)
 {
-    std::cout << GRN << "[Server] " << WHT << "-> " << BLUE << "[Client " << fd << "] " << YLW << message << RESET << std::endl;
+    std::cout << MAGEN << ">> [" << fd << "] << Client " << WHT << "taked from " <<
+			GRN << "Server: " << YLW << message << RESET << std::endl;
     send(fd, message.data(),message.length(), 0);
 }

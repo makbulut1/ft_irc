@@ -11,7 +11,7 @@ int sockAttr( struct sockaddr_in *servSock, short int port)
     fdSock = socket(AF_INET, SOCK_STREAM, 0);
     if( fdSock == -1 )
     {
-        cerr << RED <<"[-]Socket is not created!" << RESET << endl;
+        cerr << RED << "[-]Socket is not created!" << RESET << endl;
         return -1;
     }
     if( setsockopt( fdSock, SOL_SOCKET, SO_REUSEADDR, &x, sizeof(x) ) == -1 )
@@ -66,7 +66,7 @@ int clientAdder( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, soc
         pl.revents = 0;
         plFd.push_back( pl );
         usr.push_back( newClient );
-        string msg = "\e[1;33m[*]Please enter the server password:\e[0m ";
+        string msg = "\e[1;33m>_ Please enter the server password:\e[0m ";
         send( clientSock_fd, msg.data(), msg.length(), 0 );
         cout << GRN << "[+]Connection Accepted" << WHT << " -> " << CYN <<
 			inet_ntoa( servSock->sin_addr ) << WHT << ":" << YLW << ntohs(servSock->sin_port) << RESET << endl;
@@ -101,8 +101,8 @@ static void chrDeleter( char ch, string& s )
 static int passChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &usr, string data, int cli )
 {
     string outPass(data);
-    string errMsg("\e[1;31m[-]Wrong password!\n\e[1;34m[*]Retype password:\e[0m ");
-    string noticeMsg("\e[1;34m[.]Enter <NICK> your_nick than <USER> your_username "
+    string errMsg("\e[1;31mWrong password!\n\e[1;36mRetype:\e[0m ");
+    string noticeMsg("\e[1;34m>_ Enter <NICK> your_nick than <USER> your_username "
 					 "e.g:\e[1;35m\nNICK bob123\nUSER bob\n\e[1;33m(Please login below as shown above..)\n\e[0m");
     if( outPass != g_PASS )
     {
