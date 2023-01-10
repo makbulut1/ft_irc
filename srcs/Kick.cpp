@@ -55,9 +55,10 @@ int kick(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, std:
         SendMessage(message, pfd[id].fd);
         return 0;
     } else {
+		string oldChnl = usr[i].getChannel();
         usr[i].setChannel("");
-        message = ":ircserv " + usr[i].getNick() + " -*-[You are kicked!]-*- from #[" + usr[id - 1].getChannel() + "] by [" + usr[id - 1].getNick() + "]\r\n";
-        SendMessage(message, pfd[id + 1].fd);
+		message = ":ircserv " + usr[i - 1].getNick() + " is kicked from -> [" + oldChnl + "]\r\n";
+        SendMessage(message, pfd[id].fd);
         return 0;
     }
     message = ":ircserv 401 " + usr[id - 1].getNick() + " " + nick + " :Channel or nickname not found!\r\n";
