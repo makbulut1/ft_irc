@@ -40,5 +40,6 @@ int nickname(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, 
 int ping(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr,std::string data);
 int join(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, std::string data);
 int kick(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, std::string data);
+int quit(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr,std::string data);
 
 #endif //FT_IRC_COMMANDS_HPP
