@@ -24,7 +24,7 @@ int kick(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, std:
     while (data[0] == ' ')
         data.erase(data.begin());
     nick = data.substr(0, data.find('\n'));
-    std::cout << "nick " << nick << std::endl;
+    std::cout << "Nickname: " << nick << std::endl;
     if (nick.length() < 1) {
         message = ":ircserv 412 " + usr[id - 1].getNick() + " :Cannot to send! [no text]\r\n";
         SendMessage(message, pfd[id].fd);
@@ -56,8 +56,8 @@ int kick(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, std:
         return 0;
     } else {
         usr[i].setChannel("");
-        message = ":ircserv " + usr[i].getNick() + " -*-[You are kicked!]-*- from #" + usr[i - 1].getChannel() + " by " + usr[id - 1].getNick() + "\r\n";
-        SendMessage(message, pfd[i + 1].fd);
+        message = ":ircserv " + usr[i].getNick() + " -*-[You are kicked!]-*- from #[" + usr[i - 1].getChannel() + "] by [" + usr[id - 1].getNick() + "]\r\n";
+        SendMessage(message, pfd[id - 1].fd);
         return 0;
     }
     message = ":ircserv 401 " + usr[id - 1].getNick() + " " + nick + " :Channel or nickname not found!\r\n";
