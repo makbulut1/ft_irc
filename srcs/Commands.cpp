@@ -40,6 +40,7 @@ int Commands::EnterCommand(std::string &data, int id, std::vector<Client> &usr, 
             "USER",
             "KICK",
 			"QUIT",
+			"NOTICE",
             NULL
     };
 
@@ -51,7 +52,8 @@ int Commands::EnterCommand(std::string &data, int id, std::vector<Client> &usr, 
             &nickname,
             &nickname,
             &kick,
-			&quit
+			&quit,
+			&notice
     };
 
     setSubCmd(data);
