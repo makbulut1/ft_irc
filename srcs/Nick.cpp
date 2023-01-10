@@ -14,7 +14,7 @@ int nickname(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, 
     if (usr[id - 1].getNameStat() == 0) {
         while (i < id - 1) {
             if (usr[i].getNick() == my_data) {
-                message = "[FT_IRC]-/Nickname Error: [" + my_data + "] This nickname is used!\r\n";
+                message = ":ircserv 433 ERR_NICKNAMEINUSE\n" + my_data + "This nickname is used!\r\n";
                 SendMessage(message, pfd[id].fd);
                 return 0;
             }
@@ -27,7 +27,7 @@ int nickname(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, 
     usr[id - 1].setName(my_data);
     usr[id - 1].setNameStat(1);
     usr[id - 1].getReply() = ":" + usr[id - 1].getNick() + "!" + usr[id - 1].getName() + "@127.0.0.1";
-    message = ":ircserv 001 " + usr[id - 1].getNick() + " Welcome to the Internet Relay Network " \
+    message = ":ircserv 001 " + usr[id - 1].getNick() + " /***********[WELCOME TO THE INTERNET RELAY CHAT SERVER]***********\\ " \
  + usr[id - 1].getReply() + "\r\n";
     SendMessage(message, pfd[id].fd);
     return 0;
