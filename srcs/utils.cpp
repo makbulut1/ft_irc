@@ -111,7 +111,6 @@ static int passChecker( std::vector<struct pollfd> &plFd, std::vector<Client> &u
 	}
 	usr[cli - 1].setPasswdStat(1);
 	send( plFd[cli].fd, noticeMsg.data(), noticeMsg.size(), 0 );
-	cerr << outPass << endl;
 	return 0;
 }
 
