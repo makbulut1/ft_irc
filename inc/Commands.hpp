@@ -42,5 +42,6 @@ int join(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, std:
 int kick(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, std::string data);
 int quit(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr,std::string data);
 int notice(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr,std::string data);
+int help(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr,std::string data);
 
 #endif //FT_IRC_COMMANDS_HPP
