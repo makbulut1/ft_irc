@@ -14,7 +14,7 @@ int nickname(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, 
     if (usr[id - 1].getNameStat() == 0) {
         while (i < id - 1) {
             if (usr[i].getNick() == my_data) {
-                message = "\e[1;31m>_ Nickname Error: \e[1;36m[" + my_data + "]\e[1;31m This nickname is used!\r\n\e[0m";
+                message = "[FT_IRC]-/Nickname Error: [" + my_data + "] This nickname is used!\r\n";
                 SendMessage(message, pfd[id].fd);
                 return 0;
             }

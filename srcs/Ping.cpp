@@ -6,7 +6,7 @@ int ping(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr,std::
 
     (void)usr;
     (void)data;
-    message = "\e[1;33m>_ Ping request received by [IRC_SERVER]\r\n\e[0m";
+    message = "[FT_IRC]-/Ping request received.\r\n";
     SendMessage(message, pfd[id].fd);
     return 0;
 }

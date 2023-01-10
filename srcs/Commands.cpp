@@ -54,7 +54,7 @@ int Commands::EnterCommand(std::string &data, int id, std::vector<Client> &usr, 
 
     setSubCmd(data);
     if (data.find(' ') == std::string::npos) {
-        setMessage("\e[1;31mInvalid Command!\n\e[1;36mCommand not found: " + getSubCmd() + "\n\e[0m");
+        setMessage("Invalid Command!\nCommand not found: " + getSubCmd() + "\n");
         send(plFd[id].fd , this->getMessage().data(), this->getMessage().length(), 0);
         return 0;
     }
@@ -66,7 +66,7 @@ int Commands::EnterCommand(std::string &data, int id, std::vector<Client> &usr, 
             return cmdp[i](id, plFd, usr, data);
         ++i;
     }
-    setMessage("\e[1;31mMissing Command!\n\e[1;36mCommand is missing: " + getSubCmd() + "\n\e[0m");
+    setMessage("Missing Command!\nCommand is missing: " + getSubCmd() + "\n");
     SendMessage(getMessage(), plFd[id].fd);
     return 0;
 }
