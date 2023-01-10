@@ -41,7 +41,7 @@ int privmsg(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, s
         data.erase(data.begin());
         if (usr[id - 1].getChannel() != channel)
         {
-            message = ":ircserv 404 " + usr[id - 1].getNick() + " " + usr[id - 1].getChannel() + " :Cannot send to channel\r\n";
+            message = ":ircserv 404 " + usr[id - 1].getNick() + " " + usr[id - 1].getChannel() + " :Cannot send to channel!\r\n";
             SendMessage(message, pfd[id].fd);
             return 0;
         }
@@ -81,7 +81,7 @@ int privmsg(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, s
         message = data;
         if (message.length() < 1)
         {
-            message = ":ircserv 412 " + usr[id - 1].getNick() + " :No text to send\r\n";
+            message = ":ircserv 412 " + usr[id - 1].getNick() + " :Cannot to send! [no text]\r\n";
             SendMessage(message, pfd[id].fd);
             return 0;
         }
@@ -96,7 +96,7 @@ int privmsg(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, s
             }
             ++i;
         }
-        message = ":ircserv 401 " + usr[id - 1].getNick() + " " + nick + " :No such nick/channel\r\n";
+        message = ":ircserv 401 " + usr[id - 1].getNick() + " " + nick + " :Nick or channel not found!\r\n";
         SendMessage(message, pfd[id].fd);
         return 0;
     }
