@@ -19,7 +19,7 @@ int nickname(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, 
 	{
 		if (usr[i].getNick() == my_data)
 		{
-			message = ":ircserv 433 ERR_NICKNAMEINUSE\n[" + my_data + "]This nickname is used!\r\n";
+			message = ":ircserv 433 ERR_NICKNAMEINUSE\n[" + my_data + "]This nickname is used!\nNickname automatically assigned\r\n";
 			SendMessage(message, pfd[id].fd);
 			return 0;
 		}

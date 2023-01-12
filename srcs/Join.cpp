@@ -12,6 +12,12 @@ int join(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, std:
     std::vector<Client> chan_usrs;
     size_t i;
 
+	if( usr[id - 1].getNickStat() == 0 || usr[id - 1].getNameStat() == 0 )
+	{
+		message = "You have not a nick or username!\r\n";
+		SendMessage(message, pfd[id].fd);
+		return 0;
+	}
     i = 0;
     while (data[0] == ' ')
         data.erase(data.begin());
