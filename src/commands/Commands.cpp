@@ -1,5 +1,5 @@
-#include "../inc/Commands.hpp"
-#include "../inc/ircserv.hpp"
+#include "../../inc/Commands.hpp"
+#include "../../inc/ircserv.hpp"
 
 Commands::Commands() {};
 

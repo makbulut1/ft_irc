@@ -1,7 +1,7 @@
 NAME			=	ircserv
 
 INC				=	./inc/
-BIN				=	./srcs/bin
+BIN				=	./src/bin
 
 RESET			=	\033[0m
 GREEN			=	\033[32m
@@ -9,9 +9,9 @@ YELLOW			=	\033[33m
 BLUE			=	\033[34m
 RED				=	\033[31m
 
-SRCS			=	$(shell find srcs -type f -name "*.cpp")
+SRCS			=	$(shell find src -type f -name "*.cpp")
 INCS			=	$(shell find inc -type f -name "*.hpp")
-OBJS			=	$(SRCS:srcs/%.cpp=srcs/bin/%.o)
+OBJS			=	$(SRCS:src/%.cpp=src/bin/%.o)
 HOBJS			=	$(INCS:inc/%.hpp)
 
 CC				=	@c++
@@ -39,7 +39,7 @@ fclean:			clean
 
 re:				fclean $(NAME)
 
-$(BIN)%.o: srcs/%.cpp
+$(BIN)%.o: src/%.cpp
 	@mkdir -p $(shell dirname $@)
 	@$(CC) $(CPPFLAGS) -c $< -o $@ -I$(INC)
 

@@ -2,7 +2,7 @@
 // Created by Mehmet eren Akbulut on 1/8/23.
 //
 
-#include "../inc/Commands.hpp"
+#include "../../inc/Commands.hpp"
 
 int privmsg(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, std::string data) {
     std::string channel;

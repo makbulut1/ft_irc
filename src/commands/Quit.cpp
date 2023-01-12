@@ -1,5 +1,5 @@
-#include "../inc/Commands.hpp"
-#include "../inc/ircserv.hpp"
+#include "../../inc/Commands.hpp"
+#include "../../inc/ircserv.hpp"
 
 int quit(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr,std::string data)
 {
