@@ -8,7 +8,7 @@ int notice(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr,std
 		message = "You have not a nick or username!\r\n";
 		SendMessage(message, pfd[id].fd);
 		return 0;
-	}
+	} // If notice behaves strangely please remove up to nick and username check control
 	int i = -1;
 	int cliOfNbr;
 
