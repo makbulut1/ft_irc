@@ -1,8 +1,8 @@
-# ft_irc
+<!-- # ft_irc
 Create your own IRC server in C++, fully compatible with an official client.
 
 # Fonksiyonlar
-<br>
+<br> -->
 
 <!--|---
 |socket
@@ -52,7 +52,7 @@ Create your own IRC server in C++, fully compatible with an official client.
 |---
 |poll-->
 
-### 1. Socket creation:
+<!-- ### 1. Socket creation:
 ```
 int sockfd = socket(domain, type, protocol)
 ```
@@ -91,4 +91,50 @@ Stages for Client
 Socket connection: Exactly same as that of server’s socket creation
 Connect: The connect() system call connects the socket referred to by the file descriptor sockfd to the address specified by addr. Server’s address and port is specified in addr.
 
-https://www.tutorialspoint.com/unix_sockets/what_is_socket.htm
+https://www.tutorialspoint.com/unix_sockets/what_is_socket.htm -->
+
+# ft_irc (Internet Relay Chat Server)
+
+### Server Running Command
+
+```
+make
+
+./ircserv [PORT] [PASSWORD]
+
+````
+
+<img src="img/img.png" width="60%">
+
+---
+
+#### Client
+
+You can choose ready irc client for client. KVIRC will be the best of them. You can also connect with netcat (nc).
+
+[KVIRC](http://www.kvirc.net/)
+```
+nc [IP] [PORT];
+```
+
+<!-- <img src="img/img1.png" width="60%"> -->
+![](img/img1.png)
+
+## Commands
+
+```
+HELP 
+
+JOIN [#CHANNEL]
+
+PRIVMSG [#CHANNEL] : [MESSAGE]
+
+PRIVMSG [NICK] : [MESSAGE]
+
+KICK [#CHANNEL] [NICK]
+
+NOTICE [#CHANNEL] : [MESSAGE]
+
+QUIT 
+```
+
