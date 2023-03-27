@@ -26,7 +26,7 @@ int nickname(int id, std::vector<struct pollfd> &pfd, std::vector<Client> &usr, 
     }
     usr[id - 1].setName(my_pass);
     usr[id - 1].setNameStat(1);
-    usr[id - 1].getReply() = ":" + usr[id - 1].getNick() + "!" + usr[id - 1].getName() + "@127.0.0.1";
+    usr[id - 1].setReply(":" + usr[id - 1].getNick() + "!" + usr[id - 1].getName() + "@127.0.0.1");
     message = ":ircserv 001 " + usr[id - 1].getNick() + " Welcome to the Internet Relay Network " \
  + usr[id - 1].getReply() + "\r\n";
     SendMessage(message, pfd[id].fd);
